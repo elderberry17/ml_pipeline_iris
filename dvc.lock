@@ -160,30 +160,30 @@ stages:
     cmd: PYTHONPATH="." python3 lib/train.py --config-path params.yaml
     deps:
     - path: data/features_preparation
-      md5: 981ee2607c05690992f65a4b176a4ad7.dir
-      size: 10470
+      md5: 76593e711a513ac2dcf73fd772feede2.dir
+      size: 14635
       nfiles: 2
     - path: lib/train.py
       md5: 509e2256e5ff05ccf95634ebc350ee2f
       size: 2630
     params:
       params.yaml:
-        train.model: LogisticRegression
+        train.model: DecisionTreeClassifier
     outs:
     - path: data/train
-      md5: 8d508772e8d06503a96cdcf1c21311cc.dir
-      size: 1264
+      md5: b29827bc44e052abe52d61b41bf71944.dir
+      size: 1891
       nfiles: 3
   eval:
     cmd: PYTHONPATH="." python3 lib/eval.py --config-path params.yaml
     deps:
     - path: data/features_preparation
-      md5: 981ee2607c05690992f65a4b176a4ad7.dir
-      size: 10470
+      md5: 76593e711a513ac2dcf73fd772feede2.dir
+      size: 14635
       nfiles: 2
     - path: data/train
-      md5: 8d508772e8d06503a96cdcf1c21311cc.dir
-      size: 1264
+      md5: b29827bc44e052abe52d61b41bf71944.dir
+      size: 1891
       nfiles: 3
     - path: lib/eval.py
       md5: 7f9644ae9ac4bcbfaf940e69b0d40f24
@@ -194,15 +194,14 @@ stages:
           metrics:
           - precision
           - recall
-          - accuracy
     outs:
     - path: data/eval
-      md5: 11e53d72e87fb814a5ee1f9e7a544440.dir
-      size: 9777
+      md5: de1e451da9de0f516b9bfeb68a23bc0a.dir
+      size: 11137
       nfiles: 2
     - path: data/metrics.json
-      md5: dc19463461c09b466e91551f95b3438c
-      size: 80
+      md5: 9a37a3728e02a8a2d035d16cbdbe50e4
+      size: 63
   features_preparation:
     cmd: PYTHONPATH="." python3 lib/features_preparation.py --config-path params.yaml
     deps:
@@ -214,9 +213,11 @@ stages:
         features_preparation.features:
         - sepal_length
         - sepal_width
-        features_preparation.test_size: 0.03
+        - petal_length
+        - petal_width
+        features_preparation.test_size: 0.95
     outs:
     - path: data/features_preparation
-      md5: 981ee2607c05690992f65a4b176a4ad7.dir
-      size: 10470
+      md5: 76593e711a513ac2dcf73fd772feede2.dir
+      size: 14635
       nfiles: 2

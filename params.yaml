@@ -1,13 +1,16 @@
 features_preparation:
-  test_size: 0.03
+  test_size: 0.95
   features:
   - sepal_length
   - sepal_width
+  - petal_length
+  - petal_width
+
 train:
-  model: LogisticRegression
+  model: DecisionTreeClassifier
 
 eval:
   metrics:
   - precision
   - recall
-  - accuracy
+
