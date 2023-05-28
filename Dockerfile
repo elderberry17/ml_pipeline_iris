@@ -21,4 +21,7 @@ RUN jupyter contrib nbextension install --user && \
     jupyter nbextension enable  execute_time/ExecuteTime && \
     python3.9 -m ipykernel.kernelspec
 
+RUN git config --global user.email "bezgin14a@mail.ru"
+RUN git config --global user.name "elderberry17"
+
 RUN PYTHONPATH="$WORKDIR:$PYTHONPATH"

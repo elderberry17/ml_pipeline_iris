@@ -1,5 +1,10 @@
+features_preparation:
+  test_size: 0.03
+  features:
+  - sepal_length
+  - sepal_width
 train:
-  test_size: 0.9
+  model: LogisticRegression
 
 eval:
   metrics:

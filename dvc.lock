@@ -157,30 +157,37 @@ stages:
           experiment_name: test1
           run_name: test_run_name
   train:
-    cmd: PYTHONPATH="." python lib/train.py --config-path params.yaml
+    cmd: PYTHONPATH="." python3 lib/train.py --config-path params.yaml
     deps:
+    - path: data/features_preparation
+      md5: 981ee2607c05690992f65a4b176a4ad7.dir
+      size: 10470
+      nfiles: 2
     - path: lib/train.py
-      md5: a67c51ae561cf74f3eac2f584c8dbb5c
-      size: 2378
+      md5: 509e2256e5ff05ccf95634ebc350ee2f
+      size: 2630
     params:
       params.yaml:
-        train:
-          test_size: 0.9
+        train.model: LogisticRegression
     outs:
     - path: data/train
-      md5: 20ba93585ac7732c3ce57ff29b680045.dir
-      size: 16130
-      nfiles: 4
+      md5: 8d508772e8d06503a96cdcf1c21311cc.dir
+      size: 1264
+      nfiles: 3
   eval:
-    cmd: PYTHONPATH="." python lib/eval.py --config-path params.yaml
+    cmd: PYTHONPATH="." python3 lib/eval.py --config-path params.yaml
     deps:
+    - path: data/features_preparation
+      md5: 981ee2607c05690992f65a4b176a4ad7.dir
+      size: 10470
+      nfiles: 2
     - path: data/train
-      md5: 20ba93585ac7732c3ce57ff29b680045.dir
-      size: 16130
-      nfiles: 4
+      md5: 8d508772e8d06503a96cdcf1c21311cc.dir
+      size: 1264
+      nfiles: 3
     - path: lib/eval.py
-      md5: 0182d6ec302c0f451b0f284ee7d6e3d3
-      size: 1100
+      md5: 7f9644ae9ac4bcbfaf940e69b0d40f24
+      size: 1514
     params:
       params.yaml:
         eval:
@@ -190,9 +197,26 @@ stages:
           - accuracy
     outs:
     - path: data/eval
-      md5: 1c6160cb43e067815bf2c14fc137ed92.dir
-      size: 10791
-      nfiles: 1
+      md5: 11e53d72e87fb814a5ee1f9e7a544440.dir
+      size: 9777
+      nfiles: 2
     - path: data/metrics.json
-      md5: 9b5b5d38d92b7e83182b739a14bcfdb7
-      size: 94
+      md5: dc19463461c09b466e91551f95b3438c
+      size: 80
+  features_preparation:
+    cmd: PYTHONPATH="." python3 lib/features_preparation.py --config-path params.yaml
+    deps:
+    - path: lib/features_preparation.py
+      md5: a905464902831581d18ceaed4b21154b
+      size: 2025
+    params:
+      params.yaml:
+        features_preparation.features:
+        - sepal_length
+        - sepal_width
+        features_preparation.test_size: 0.03
+    outs:
+    - path: data/features_preparation
+      md5: 981ee2607c05690992f65a4b176a4ad7.dir
+      size: 10470
+      nfiles: 2
